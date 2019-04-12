@@ -13,7 +13,8 @@
     "postinstall": "electron-builder install-app-deps",
     "pack-win": "electron-packager . --overwrite --asar=true --platform=win32 --arch=x64 --icon=icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"CadLabel\"",
     "pack-linux": "electron-packager . --overwrite --asar --platform=linux --arch=x64 --icon=icon.png --prune=true --out=release-builds",
-    "pack-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=icon.icns --prune=true --out=release-builds"
+    "pack-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=icon.icns --prune=true --out=release-builds",
+    "deb64": "electron-installer-debian --src release-builds/cadlabel-linux-x64/ --dest release-builds/installers/ --arch amd64"
   },
   "build": {
     "appId": "br.com.cadplast.cadlabel",
@@ -41,7 +42,9 @@
   "devDependencies": {
     "electron": "^4.1.4",
     "electron-builder": "^20.39.0",
-    "electron-installer-debian": "^1.1.1"
+    "electron-installer-debian": "^1.1.1",
+    "electron-squirrel-startup": "^1.0.0",
+    "electron-winstaller": "^3.0.4"
   },
   "dependencies": {
     "electron-settings": "^3.2.0",
