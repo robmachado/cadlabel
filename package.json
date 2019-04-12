@@ -12,7 +12,7 @@
     "pack": "build --dir",
     "postinstall": "electron-builder install-app-deps",
     "pack-win": "electron-packager . --overwrite --asar=true --platform=win32 --arch=x64 --icon=icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"CadLabel\"",
-    "pack-linux": "electron-packager . --overwrite --platform=linux --arch=x64 --icon=icon.png --prune=true --out=release-builds",
+    "pack-linux": "electron-packager . --overwrite --asar --platform=linux --arch=x64 --icon=icon.png --prune=true --out=release-builds",
     "pack-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=icon.icns --prune=true --out=release-builds"
   },
   "build": {
@@ -40,7 +40,8 @@
   "license": "MIT",
   "devDependencies": {
     "electron": "^4.1.4",
-    "electron-builder": "^20.39.0"
+    "electron-builder": "^20.39.0",
+    "electron-installer-debian": "^1.1.1"
   },
   "dependencies": {
     "electron-settings": "^3.2.0",
