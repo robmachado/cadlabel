@@ -1,67 +1,25 @@
-const { app, BrowserWindow, Menu, Tray } = require('electron');
-const printer = require('printer');
-const util = require('util');
+'use strict';
+
+const { app, BrowserWindow } = require('electron');
 const url = require('url');
 const path = require('path');
 
 let mainWindow;
+process.env.NODE_ENV = "dev";
 
-app.on('ready', function () {
-    createWindow();
-});
-
-let listPrinters = printer.getPrinters();
-let iconPath = path.join(__dirname, 'supermarket-barcode.png')
-let printericon = path.join(__dirname, 'tray.png')
-let submenu = [];
-listPrinters.forEach((element) => {
-    submenu.push({ label: element.name, icon: printericon });
-});
-
-let menutemp = [
-    {
-        label: 'Impressoras',
-        submenu: submenu
-    },
-    {
-        label: 'Sobre', click: function () {
-            console.log('Aqui');
-        }
-    },
-    {
-        label: 'Sair', click: function () {
-            app.isQuiting = true;
-            app.quit();
-        }
-    }
-];
-
-function createWindow () {
-    mainWindow = new BrowserWindow({ width: 800, height: 600,  title: 'CadLabel', icon: iconPath });
-
-    let file = url.format({
-        pathname: path.join(__dirname, 'index.html'),
-        protocol: 'file',
-        slashes: true
+app.on('ready', () => {
+    mainWindow = new BrowserWindow({
+        width: 800,
+        height: 500,
+        minWidth: 800,
+        minHeight: 500,
+        icon: path.join(__dirname, 'icon.png')
     });
+    mainWindow.loadURL(`file://${__dirname}/index.html`);
+    mainWindow.setMenu(null);
 
-    mainWindow.loadURL(file);
-
-    if (process.env.NODE_ENV == 'development') {
+    if (process.env.NODE_ENV != "production") {
         mainWindow.webContents.openDevTools();
     }
-
-    let contextMenu = Menu.buildFromTemplate(menutemp);
-
-    let tray = new Tray(path.join(__dirname, 'supermarket-barcode.png'));
-    tray.setContextMenu(contextMenu);
-
-    tray.on('click', function() {
-        mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show();
-    });
-
-    mainWindow.on('show', function () {
-        tray.setHighlightMode('always');
-    });
-}
-
+    mainWindow.on('closed', () => app.quit());
+});

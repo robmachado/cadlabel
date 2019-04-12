@@ -1,0 +1,7 @@
+"postinstall": "electron-builder install-app-deps",
+
+"electron-settings": "^3.2.0",
+    "encoding": "^0.1.12",
+    "moment": "^2.22.2",
+    "printer": "^0.2.2",
+    "strings": "^0.4.2"

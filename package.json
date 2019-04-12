@@ -1,20 +1,52 @@
 {
   "name": "cadlabel",
   "version": "1.0.0",
-  "description": "",
+  "description": "Electron app for printing labels from tamplate in Zebra EPL Printer",
+  "homepage": "https://github.com/robmachado/cadlabel",
+  "repository": "https://github.com/robmachado/cadlabel",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "rebuild": "electron-rebuild -f -w"
+    "dist-linux": "build -l --x64",
+    "dist-win": "build -w --x64 --ia32",
+    "pack": "build --dir",
+    "postinstall": "electron-builder install-app-deps",
+    "pack-win": "electron-packager . --overwrite --asar=true --platform=win32 --arch=x64 --icon=icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"CadLabel\"",
+    "pack-linux": "electron-packager . --overwrite --platform=linux --arch=x64 --icon=icon.png --prune=true --out=release-builds",
+    "pack-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=icon.icns --prune=true --out=release-builds"
   },
-  "author": "",
-  "license": "ISC",
+  "build": {
+    "appId": "br.com.cadplast.cadlabel",
+    "productName": "CadLabel",
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "icon.ico"
+    }
+  },
+  "keywords": [
+    "zebra",
+    "impressão"
+  ],
+  "author": {
+    "name": "Roberto L. Machado",
+    "email": "linux.rlm@gmail.com"
+  },
+  "license": "MIT",
   "devDependencies": {
-    "electron": "^2.0.9",
-    "electron-builder": "^20.28.4",
-    "electron-rebuild": "^1.8.2"
+    "electron": "^4.1.4",
+    "electron-builder": "^20.39.0"
   },
   "dependencies": {
-    "printer": "^0.2.2"
+    "electron-settings": "^3.2.0",
+    "encoding": "^0.1.12",
+    "moment": "^2.24.0",
+    "printer": "^0.2.2",
+    "strings": "^0.4.2"
   }
 }
